@@ -1,0 +1,50 @@
+schema: '2.0'
+stages:
+  generate_data:
+    cmd: poetry run python src/openrate/generate_data.py
+    deps:
+    - path: src/openrate/generate_data.py
+      hash: md5
+      md5: 9e7c301cae196ded33f192ecacc9dad9
+      size: 1178
+    outs:
+    - path: data/raw/openrate_mock.csv
+      hash: md5
+      md5: d4bddf1b3513fd1eea12dd2bfa10b29f
+      size: 496118
+  prepare_data:
+    cmd: poetry run python src/openrate/prepare_data.py
+    deps:
+    - path: data/raw/openrate_mock.csv
+      hash: md5
+      md5: d4bddf1b3513fd1eea12dd2bfa10b29f
+      size: 496118
+    - path: src/openrate/prepare_data.py
+      hash: md5
+      md5: 6d766716adf6309f3fe4e0d681948508
+      size: 523
+    outs:
+    - path: data/processed/openrate_processed.csv
+      hash: md5
+      md5: dd1922e048879d7e3b4b90433297d572
+      size: 887992
+  train:
+    cmd: poetry run python src/openrate/train.py
+    deps:
+    - path: data/processed/openrate_processed.csv
+      hash: md5
+      md5: dd1922e048879d7e3b4b90433297d572
+      size: 887992
+    - path: params.yaml
+      hash: md5
+      md5: d625ee1d8b8f8ab39ea8fcef687eee03
+      size: 343
+    - path: src/openrate/train.py
+      hash: md5
+      md5: 97bd60ed2d96b84193e328521bd83e72
+      size: 3159
+    outs:
+    - path: outputs/model_metrics.csv
+      hash: md5
+      md5: 61598b243a82ae71e80d295963a6f473
+      size: 200

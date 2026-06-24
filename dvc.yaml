@@ -1,0 +1,25 @@
+stages:
+  generate_data:
+    cmd: poetry run python src/openrate/generate_data.py
+    deps:
+      - src/openrate/generate_data.py
+    outs:
+      - data/raw/openrate_mock.csv
+
+  prepare_data:
+    cmd: poetry run python src/openrate/prepare_data.py
+    deps:
+      - src/openrate/prepare_data.py
+      - data/raw/openrate_mock.csv
+    outs:
+      - data/processed/openrate_processed.csv
+
+  train:
+    cmd: poetry run python src/openrate/train.py
+    deps:
+      - src/openrate/train.py
+      - data/processed/openrate_processed.csv
+      - params.yaml
+    metrics:
+      - outputs/model_metrics.csv:
+          cache: false
