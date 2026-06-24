@@ -18,12 +18,18 @@ data = pd.DataFrame({
     "segment": np.random.choice(["new", "active", "inactive"], n)
 })
  
-data["target_opened"] = (
-    (data["historical_open_rate"] > 0.5) &
-    (data["days_since_last_open"] < 10)
-).astype(int)
+ 
+prob_open = (
+    0.6 * data["historical_open_rate"]
+    + 0.2 * (data["days_since_last_open"] < 10).astype(int)
+    + 0.1 * (data["segment"] == "active").astype(int)
+    + 0.1 * np.random.rand(n)
+)
+ 
+data["target_opened"] = (prob_open > 0.55).astype(int)
  
 data.to_csv("data/raw/openrate_mock.csv", index=False)
  
 print("Dataset mock generado en data/raw/openrate_mock.csv")
 print(data.head())
+ 
