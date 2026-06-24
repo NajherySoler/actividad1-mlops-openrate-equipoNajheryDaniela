@@ -17,7 +17,6 @@ data = pd.DataFrame({
     "days_since_last_open": np.random.randint(0, 30, n),
     "segment": np.random.choice(["new", "active", "inactive"], n)
 })
- 
 
 prob_open = (
     0.45 * data["historical_open_rate"]
@@ -28,6 +27,7 @@ prob_open = (
 )
 
 data["target_opened"] = np.random.binomial(1, prob_open.clip(0, 1))
+
 data.to_csv("data/raw/openrate_mock.csv", index=False)
 
 print("Dataset mock generado en data/raw/openrate_mock.csv")
