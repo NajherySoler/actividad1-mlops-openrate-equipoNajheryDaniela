@@ -16,4 +16,5 @@ models:
     random_state: 42
 
 mlflow:
+  tracking_uri: sqlite:///mlflow.db
   experiment_name: openrate_classification
