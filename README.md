@@ -7,6 +7,10 @@
 
 ---
 
+## Presentado para
+
++ Wilmer Pineda
+
 ## Descripción del proyecto
 
 Este proyecto implementa un flujo básico de MLOps para predecir si un usuario abrirá o no una notificación push.
